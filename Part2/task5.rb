@@ -1,20 +1,14 @@
 puts 'Введите цифрами число.месяц.год'
 
+FEBRUARY = 1
+
 day, month, year = gets.split('.').map(&:to_i)
 
-leap_year =
-  if year % 400 == 0
-    true
-  elsif year % 100 == 0
-    false
-  else
-    year % 4 == 0
-  end
+leap_year = year % 400 == 0 || year % 4 == 0 && year % 100 != 0
 
-days_count = %w[31 28 31 30 31 30 31 31 30 31 30 31].map(&:to_i)
+days_count = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
 
-february = 1
-days_count[february] = 29 if leap_year
+days_count[FEBRUARY] = 29 if leap_year
 
 counter = days_count.take(month - 1).sum + day
 

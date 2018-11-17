@@ -2,8 +2,6 @@ puts 'Основы Руби. Часть 2. Задача 3. Числа фибон
 
 UP_LIMIT = 100
 
-base_range = (2..UP_LIMIT)
-
 fibonacci = [0, 1]
 next_number = 1
 while next_number <= UP_LIMIT
