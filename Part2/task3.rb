@@ -8,9 +8,9 @@ fibonacci = [0, 1]
 next_number = 1
 while next_number <= UP_LIMIT
   fibonacci << next_number
-  next_number = next_number + fibonacci[-2]
+  next_number += fibonacci[-2]
 end
 
 puts
-  puts fibonacci.join(" ")
+puts fibonacci.join(' ')
 puts

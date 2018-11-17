@@ -5,15 +5,13 @@ day, month, year = gets.split('.').map(&:to_i)
 leap_year =
   if year % 400 == 0
     true
-  elsif year%100 == 0
+  elsif year % 100 == 0
     false
-  elsif year % 4 == 0
-    true
   else
-    false
+    year % 4 == 0
   end
 
-days_count = %w'31 28 31 30 31 30 31 31 30 31 30 31'.map(&:to_i)
+days_count = %w[31 28 31 30 31 30 31 31 30 31 30 31].map(&:to_i)
 
 february = 1
 days_count[february] = 29 if leap_year
