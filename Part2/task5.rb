@@ -5,31 +5,19 @@ day, month, year = gets.split('.').map(&:to_i)
 leap_year =
   if year % 400 == 0
     true
-  elsif year % 100 == 0
+  elsif year%100 == 0
     false
+  elsif year % 4 == 0
+    true
   else
-    year % 4 == 0
+    false
   end
 
-months = {
-  1 => 31,
-  2 => 28,
-  3 => 31,
-  4 => 30,
-  5 => 31,
-  6 => 30,
-  7 => 31,
-  8 => 31,
-  9 => 30,
-  10 => 31,
-  11 => 30,
-  12 => 31
-}
+days_count = %w'31 28 31 30 31 30 31 31 30 31 30 31'.map(&:to_i)
 
-months[2] = 29 if leap_year
+february = 1
+days_count[february] = 29 if leap_year
 
-counter = day
-months.select { |i_month, _i_days| i_month < month }
-      .each { |_i_month, i_days| counter += i_days }
+counter = days_count.take(month - 1).sum + day
 
 puts counter

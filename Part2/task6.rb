@@ -1,5 +1,5 @@
 puts 'Основы Руби. Часть 2. задание 6'
-basket = Hash.new('пусто')
+cart = {'пусто'}
 
 loop do
   puts 'введите  название продукта'
@@ -10,15 +10,15 @@ loop do
   puts 'введите через пробел цену и количество'
 
   price, count = gets.split(' ').map(&:to_f)
-  basket[product_name] = { price: price, count: count }
+  cart[product_name] = { price: price, count: count }
 end
 
-totall = 0.0
+total = 0.0
 puts 'содержимое корзины: '
 puts 'товар | цена | количество | сумма '
-basket.each do |product_name, invoice|
-  summ = invoice[:price] * invoice[:count]
-  totall += summ
-  puts "#{product_name} | #{invoice[:price]} | #{invoice[:count]} | #{summ}"
+cart.each do |product_name, invoice|
+  sum = invoice[:price] * invoice[:count]
+  total += sum
+  puts "#{product_name} | #{invoice[:price]} | #{invoice[:count]} | #{sum}"
 end
-puts "Итого сумма заказа: #{totall}"
+puts "Итого сумма заказа: #{total}"

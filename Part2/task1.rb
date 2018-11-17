@@ -1,19 +1,18 @@
 puts 'Месяцы по 30 дней'
 
 months = {
-  'январь' => 31,
-  'февраль' => 28,
-  'март' => 31,
-  'апрель' => 30,
-  'май' => 31,
-  'июнь' => 30,
-  'июль' => 31,
-  'август' => 31,
-  'сентярь' => 30,
-  'октябрь' => 31,
-  'ноябрь' => 30,
-  'декабрь' => 31
+  'jan' => 31,
+  'feb' => 28,
+  'mar' => 31,
+  'apr' => 30,
+  'may' => 31,
+  'jun' => 30,
+  'jul' => 31,
+  'aug' => 31,
+  'sep' => 30,
+  'oct' => 31,
+  'nov' => 30,
+  'dec' => 31
 }
 
-months.select { |_month, days_count| days_count == 30 }
-      .each { |month, days_count| puts "#{month}: #{days_count}" }
+months.each { |month, days_count| puts "#{month}: #{days_count}" if days_count == 30 }
