@@ -22,11 +22,11 @@ module RubyBasicsPart3
     end
 
     def speed_up
-      speed += 1
+      @speed += 1
     end
 
     def speed_down
-      speed -= 1 if !stopped
+      @speed -= 1 if !stopped
     end
 
     def stopped
