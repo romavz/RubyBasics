@@ -34,12 +34,4 @@ class Route
     @stations.count
   end
 
-  #--------------------------
-  #     Private section
-  #--------------------------
-  private
-  def get_station_index(station)
-    @stations.index(station)
-  end
-
 end
