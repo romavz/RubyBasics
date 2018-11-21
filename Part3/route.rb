@@ -1,8 +1,7 @@
 class Route
-
   attr_reader :stations
 
-  def initialize (first_station, last_station)
+  def initialize(first_station, last_station)
     @stations = [first_station, last_station]
   end
 
@@ -27,11 +26,11 @@ class Route
 
   def remove_station(station)
     return if station == first_station || station == last_station
+
     @stations.delete(station)
   end
 
   def stations_count
     @stations.count
   end
-
 end
