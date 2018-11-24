@@ -1,3 +1,4 @@
+
 class Route
   attr_reader :stations
 
@@ -26,6 +27,7 @@ class Route
 
   def remove_station(station)
     return if station == first_station || station == last_station
+
     @stations.delete(station)
   end
 

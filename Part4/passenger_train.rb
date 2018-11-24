@@ -1,9 +1,10 @@
-require_relative 'Train'
+require_relative 'train'
 
 # Пассажирский поезд
 class PassengerTrain < Train
 
   protected
-  def is_allowed(wagon)
+  
+  def allowed_wagon?(wagon)
     wagon.is_a?(PassengerWagon)
 end

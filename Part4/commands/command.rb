@@ -1,5 +1,6 @@
 
 class Command
+
   def initialize(application)
     @application = application
   end
@@ -7,5 +8,5 @@ class Command
   def execute
     # TODO: Переопределить в наследниках
   end
-
+  
 end

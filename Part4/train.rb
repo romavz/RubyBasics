@@ -1,3 +1,4 @@
+
 class Train
   attr_reader :speed
   attr_reader :number
@@ -10,9 +11,7 @@ class Train
     @wagons = []
   end
 
-  def wagons
-    @wagons
-  end
+  attr_reader :wagons
 
   def add_wagon(wagon)
     wagons << wagon if stopped? && is_allowed?(wagon)
@@ -52,7 +51,7 @@ class Train
     current_station.depart_train(self)
     next_station.arrive_train(self)
     @current_station_index += 1
-   end
+  end
 
   def go_to_prev_station
     return if previous_station.nil?
@@ -72,15 +71,16 @@ class Train
 
   def previous_station
     return unless @current_station_index.positive?
+
     @route.stations[@current_station_index - 1]
   end
 
   protected
+
   # наследники должны переопределить этот метод для разрешения вагонов,
   # соответствующих типу поезда
-  def is_allowed?(wagon)
+  def allowed_wagon?(_wagon)
     # по умолчанию вагоны не добавляются
     false
   end
-
 end
