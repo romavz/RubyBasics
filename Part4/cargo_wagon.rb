@@ -1,10 +1,11 @@
 
 class CargoWagon
+  attr_reader :load_capacity
 
-  def initialize(number, load_capacity, axes_count)
+  def initialize(number, load_capacity)
     super(number)
     @load_capacity = load_capacity
-    @axes_count = axes_count
+    properties['грузоподъемность'.freeze] = load_capacity
   end
-  
+
 end

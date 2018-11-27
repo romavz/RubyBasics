@@ -1,9 +1,11 @@
-require_relative "passanger_wagon_class"
 
 class PassengerWagon
+  attr_reader :seat_count
 
-  def initialize(number, passenger_wagon_class = PassengerWagonClass.SECOND)
+  def initialize(number, seat_count)
     super(number)
-    @wagon_class = passenger_wagon_class
+    @seat_count = seat_count
+    properties['количество мест'.freeze] = seat_count
   end
+
 end

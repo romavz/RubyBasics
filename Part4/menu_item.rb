@@ -1,3 +1,4 @@
+
 class MenuItem
   attr_reader :title
 
@@ -7,6 +8,6 @@ class MenuItem
   end
 
   def activate
-    command.execute unless command.nil?
+    command.execute unless command == nil
   end
 end

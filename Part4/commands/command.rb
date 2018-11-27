@@ -1,6 +1,5 @@
 
-class Command
-
+class Command  
   def initialize(application)
     @application = application
   end
@@ -8,5 +7,8 @@ class Command
   def execute
     # TODO: Переопределить в наследниках
   end
-  
+
+  protected
+
+  attr_accessor :application
 end
