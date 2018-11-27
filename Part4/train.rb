@@ -3,15 +3,16 @@ class Train
   attr_reader :speed
   attr_reader :number
   attr_reader :route
+  attr_reader :name
+  attr_reader :wagons
 
-  def initialize(number)
+  def initialize(number, name)
     @number = number
+    @name = name
     @speed = 0
     @current_station_index = nil
     @wagons = []
   end
-
-  attr_reader :wagons
 
   def add_wagon(wagon)
     wagons << wagon if stopped? && is_allowed?(wagon)
@@ -22,6 +23,7 @@ class Train
   end
 
   def speed_up(speed)
+    speed_down(speed) if speed < 0
     @speed += speed
   end
 
@@ -83,4 +85,13 @@ class Train
     # по умолчанию вагоны не добавляются
     false
   end
+
+  # фабричный метод для вагонов, будет переопределен в конкретных типах поездов
+  def create_wagon
+  end
+
+  # тип поезда
+  def type
+  end
+
 end
