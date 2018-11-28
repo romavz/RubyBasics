@@ -12,13 +12,13 @@ require './route.rb'
 require './station.rb'
 
 require './commands/route_exclude_station_command.rb'
-require './commands/train_go_prev_station.rb'
+require './commands/train_go_prev_station_command.rb'
 require './commands/show_station_trains_command.rb'
 require './commands/route_include_staton_command.rb'
 require './commands/train_add_wagon_command.rb'
 require './commands/create_route_command.rb'
 require './commands/create_passenger_train_command.rb'
-require './commands/create_cargo_train.rb'
+require './commands/create_cargo_train_command.rb'
 require './commands/select_route_command.rb'
 require './commands/create_station_command.rb'
 require './commands/exit_command.rb'
@@ -63,7 +63,7 @@ class Application
         current_menu.activate
         next
       end
-      if current_menu[item_id].is_a? Menu
+      if current_menu[item_id].is_a?(Menu)
         current_menu = current_menu[item_id]
       else
         current_menu[item_id].activate

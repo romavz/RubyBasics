@@ -4,7 +4,7 @@ require_relative 'command'
 class ShowTrainsCommand < Command
   def execute
     trains = application.trains
-    puts 'Список поездов:'
-    trains.each { |train| puts "  №#{train.number} - #{train.name} (#{train.type})" }
+    trains.each_with_index {
+      |train, index| puts " #{index + 1}.  №#{train.number} - #{train.name} (#{train.type})" }
   end
 end
