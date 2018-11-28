@@ -1,4 +1,3 @@
-
 class Train
   attr_reader :speed
   attr_reader :number
@@ -77,6 +76,9 @@ class Train
     @route.stations[@current_station_index - 1]
   end
 
+  # фабричный метод для вагонов, будет переопределен в конкретных типах поездов
+  def create_wagon; end
+
   protected
 
   # наследники должны переопределить этот метод для разрешения вагонов,
@@ -86,12 +88,6 @@ class Train
     false
   end
 
-  # фабричный метод для вагонов, будет переопределен в конкретных типах поездов
-  def create_wagon
-  end
-
   # тип поезда
-  def type
-  end
-
+  def type; end
 end

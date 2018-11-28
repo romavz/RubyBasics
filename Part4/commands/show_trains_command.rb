@@ -1,4 +1,4 @@
-require_relative './train'
+require_relative '../train'
 require_relative 'command'
 
 class ShowTrainsCommand < Command
@@ -7,5 +7,4 @@ class ShowTrainsCommand < Command
     puts 'Список поездов:'
     trains.each { |train| puts "  №#{train.number} - #{train.name} (#{train.type})" }
   end
-
 end

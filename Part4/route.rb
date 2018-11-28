@@ -1,4 +1,3 @@
-
 class Route
   attr_reader :stations
   attr_reader :name

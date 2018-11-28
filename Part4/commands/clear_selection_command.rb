@@ -1,9 +1,7 @@
 require_relative 'command'
 
 class ClearSelectionCommand < Command
-
   def execute
-    self.application.selected_objects.each { |key, value| value = nil  }
+    application.selected_objects.each { |_key, _value| value = nil }
   end
-
 end

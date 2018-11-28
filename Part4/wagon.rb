@@ -1,4 +1,3 @@
-
 class Wagon
   attr_reader :properties
 
@@ -6,5 +5,4 @@ class Wagon
     @number = number
     @properties = { 'номер'.freeze => @number }
   end
-
 end

@@ -1,5 +1,4 @@
-
-class Command  
+class Command
   def initialize(application)
     @application = application
   end
