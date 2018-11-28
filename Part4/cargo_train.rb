@@ -2,6 +2,14 @@ require_relative 'train'
 
 #  Грузовой поезд
 class CargoTrain < Train
+  def create_wagon
+    print 'Введите номер вагона: '
+    number = gets.chomp.to_i
+    print 'Введите грузоподъемность: '
+    load_capacity = gets.chomp.to_i
+    wagon = CargoWagon.new(number, load_capacity)
+    wagon
+  end
 
   protected
 
@@ -12,13 +20,4 @@ class CargoTrain < Train
   def type
     'Грузовой'
   end
-
-  def create_wagon
-    print 'Введите номер вагона: '
-    number = gets.chomp.to_i
-    print 'Введите грузоподъемность: '
-    load_capacity = gets.chomp.to_i
-    wagon = CargoWagon.new(number, load_capacity)
-  end
-
 end

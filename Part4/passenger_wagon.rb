@@ -1,4 +1,3 @@
-
 class PassengerWagon
   attr_reader :seat_count
 
@@ -7,5 +6,4 @@ class PassengerWagon
     @seat_count = seat_count
     properties['количество мест'.freeze] = seat_count
   end
-
 end
