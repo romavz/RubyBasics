@@ -16,7 +16,7 @@ class TrainModifyCommand < ModifyCommandBase
   end
 
   def view_wagons
-    puts 'Состав поезда:'
-    train.wagons.each_with_index { |wagon, index| puts "#{index + 1}. #{wagon.get_properties}" }
+    puts "Состав поезда №#{train.number} - #{train.name} :" if train.wagons.count > 0
+    train.wagons.each_with_index { |wagon, index| puts "#{index + 1}. #{wagon.properties}" }
   end
 end

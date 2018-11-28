@@ -8,10 +8,12 @@ class CreateRouteCommand < Command
       return
     end
 
-    print 'Введите название станции: '
+    print 'Введите название маршрута: '
     route_name = gets.chomp
 
-    if application.routes.select { |route| route.name == route_name }.count > 0
+    route_exists = !application.routes.index { |route| route.name == route_name }.nil?
+
+    if route_exists
       puts "Маршрут с названием #{route_name} уже есть в списке"
       return
     end

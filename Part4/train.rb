@@ -14,7 +14,7 @@ class Train
   end
 
   def add_wagon(wagon)
-    wagons << wagon if stopped? && is_allowed?(wagon)
+    wagons << wagon if stopped? && allowed_wagon?(wagon)
   end
 
   def unhook_wagon(index)
@@ -76,18 +76,19 @@ class Train
     @route.stations[@current_station_index - 1]
   end
 
-  # фабричный метод для вагонов, будет переопределен в конкретных типах поездов
-  def create_wagon; end
+  def wagon_number_is_valid?(number)
+    wagons.index { |wagon| wagon.number == number }.nil?
+  end
+
+  # тип поезда
+  def type; end
 
   protected
 
   # наследники должны переопределить этот метод для разрешения вагонов,
   # соответствующих типу поезда
-  def allowed_wagon?(_wagon)
-    # по умолчанию вагоны не добавляются
-    false
+  def allowed_wagon?(wagon)
+    wagon_number_is_valid?(wagon.number)
   end
 
-  # тип поезда
-  def type; end
 end

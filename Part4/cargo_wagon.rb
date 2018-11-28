@@ -6,6 +6,7 @@ class CargoWagon < Wagon
   def initialize(number, load_capacity)
     super(number)
     @load_capacity = load_capacity
-    properties['грузоподъемность'.freeze] = load_capacity
+    @properties << "грузоподъемность #{load_capacity}"
   end
+
 end
