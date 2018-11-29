@@ -3,7 +3,7 @@ require_relative 'command'
 
 class SelectRouteCommand < Command
   def execute
-    route_already_selected =  !application.selected_objects[:route].nil?
+    route_already_selected = !application.selected_objects[:route].nil?
     return if route_already_selected
 
     print 'Введите порядковый номер маршрута или 0 для отмены: '

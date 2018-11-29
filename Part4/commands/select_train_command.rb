@@ -23,7 +23,7 @@ class SelectTrainCommand < Command
   private
 
   def index_not_valid?(index)
-      index < 1 || index > application.trains.count
+    index < 1 || index > application.trains.count
   end
 
 end
