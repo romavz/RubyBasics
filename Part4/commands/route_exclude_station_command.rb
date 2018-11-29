@@ -6,7 +6,7 @@ class RouteExcludeStationCommand < RouteModifyCommand
   def do_execute
     stations = application.stations
 
-    show_route_stations
+    show_route_stations(route)
     puts 'Введите порядковый номер станции для исключения из маршрута или \'0\' для отмены'
 
     user_choice = gets.chomp!
