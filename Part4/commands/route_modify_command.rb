@@ -15,7 +15,7 @@ class RouteModifyCommand < ModifyCommandBase
     'Маршрут не выбран'
   end
 
-  def show_route_stations
+  def show_route_stations(route)
     puts "Список станций маршрута #{route.name}:"
     route.stations.each_with_index do |station, index|
       puts "#{index + 1}. #{station.name}"

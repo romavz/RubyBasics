@@ -5,6 +5,7 @@ class TrainGoPrevStationCommand < TrainModifyCommand
   protected
 
   def do_execute
+    puts "Станция отправления #{train.current_station}"
     train.go_to_prev_station
     puts "Поезд #{train.number} прибыл на станцию #{train.current_station}"
   end

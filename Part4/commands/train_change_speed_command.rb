@@ -11,7 +11,7 @@ class TrainChangeSpeedCommand < TrainModifyCommand
     if value > 0
       train.speed_up(value)
     else
-      train.speed_down(value)
+      train.speed_down(-value)
     end
     current_speed_message
   end

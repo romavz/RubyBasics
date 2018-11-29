@@ -7,8 +7,7 @@ class TrainAddWagonCommand < TrainModifyCommand
 
   def initialize(application)
     super(application)
-    @wagon_creators =
-    {
+    @wagon_creators = {
       CargoTrain => CargoWagonCreateStrategy.new(),
       PassengerTrain => PassengerWagonCreateStrategy.new()
     }

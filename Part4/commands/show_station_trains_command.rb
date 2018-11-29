@@ -4,12 +4,20 @@ require_relative 'command'
 
 class ShowStationTrainsCommand < Command
   def execute
-    print 'Введите название станции: '
-    station_name = gets.chomp!
-    station = application.stations.select{ |station| station.name == station_name }[0]
+    print 'Введите номер станции: '
+    index = gets.to_i
+
+    return if index == 0
+
+    if index_not_valid?(index)
+      puts "Указан не верный номер станции"
+      return
+    end
+
+    station = application.stations[index - 1]
 
     if station.nil?
-      puts "Станция #{station_name} не найдена"
+      puts "Станция не определена"
       return
     end
 
@@ -20,4 +28,9 @@ class ShowStationTrainsCommand < Command
     end
     puts " "
   end
+
+  def index_not_valid?(index)
+    index < 1 || index > application.stations.count
+  end
+
 end
