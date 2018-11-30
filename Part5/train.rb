@@ -1,4 +1,11 @@
+require_relative 'vendor'
+require_relative 'instance_counter'
+
 class Train
+
+  include Vendor
+  include InstanceCounter
+
   attr_reader :speed
   attr_reader :number
   attr_reader :route
@@ -11,7 +18,15 @@ class Train
     @speed = 0
     @current_station_index = nil
     @wagons = []
+    register_instance
   end
+
+  def self.find(number)
+    index = Train.all.index { |train| train.number == number }
+    return if index == nil
+    Train.all[index]
+  end
+
 
   def add_wagon(wagon)
     wagons << wagon if stopped? && allowed_wagon?(wagon)
