@@ -7,8 +7,6 @@ class Wagon
   attr_reader :number
   attr_reader :properties
 
-  include Manufacturer
-
   def initialize(number)
     @number = number
     @properties = ["номер вагона: #{number}"]

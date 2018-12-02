@@ -6,18 +6,24 @@ module InstanceCounter
 
   module ClassMethods
 
-    @@instances = []
+    def self.extended(target_class)
 
-    def instances
-      self.all.count
-    end
+      target_class.class_exec {
+        class << self
+          attr_accessor :instances
 
-    def all
-      @@instances
-    end
+          #def register_instance(obj)
+          #   @instances += 1
+          #end
+        end
 
-    def register_instance(instance)
-      @@instances << instance
+        def self.inherited(subclass)
+          subclass.instance_variable_set(:@instances, 0)
+        end
+      }
+
+      target_class.instance_variable_set(:@instances, 0)
+
     end
 
   end
@@ -25,7 +31,7 @@ module InstanceCounter
   protected
 
   def register_instance
-    self.class.register_instance(self)
+    self.class.instances += 1
   end
 
 end

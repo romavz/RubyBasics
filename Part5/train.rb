@@ -11,6 +11,7 @@ class Train
   attr_reader :route
   attr_reader :name
   attr_reader :wagons
+  @@trains = {}
 
   def initialize(number, name)
     @number = number
@@ -18,13 +19,13 @@ class Train
     @speed = 0
     @current_station_index = nil
     @wagons = []
+
+    @@trains[number] = self
     register_instance
   end
 
   def self.find(number)
-    index = Train.all.index { |train| train.number == number }
-    return if index == nil
-    Train.all[index]
+    @@trains[number] || "Поезд с номером /'#{number}/' не найден"
   end
 
 

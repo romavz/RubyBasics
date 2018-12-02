@@ -2,13 +2,18 @@ require_relative 'instance_counter'
 
 class Station
   attr_reader :name, :trains
-  #наследников тоже будем добавлять в коллекцию
+  @@stations = []
 
   include InstanceCounter
+
+  def self.all
+    @@stations
+  end
 
   def initialize(name)
     @name = name
     @trains = []
+    @stations << self
     register_instance
   end
 
