@@ -6,12 +6,10 @@ module InstanceCounter
 
   module ClassMethods
 
-    def self.extended(target_class)
-      attr_writer :instances
-      def instances
-        @instances ||= 0
-      end
+    attr_writer :instances
 
+    def instances
+      @instances ||= 0
     end
 
   end
