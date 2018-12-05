@@ -10,6 +10,7 @@ class Route
   def initialize(name, first_station, last_station)
     @name = name
     @stations = [first_station, last_station]
+    validate!
     register_instance
   end
 
@@ -41,4 +42,14 @@ class Route
   def stations_count
     @stations.count
   end
+
+  protected
+
+  def validate!
+    message = 'Название маршрута должно состоять из одного и более слов'
+    raise ArgumentError, message if name !~ /^([а-яА-Я]|\d)([а-яА-Я\.\-\ ]|\d){,49}$/ 
+    raise ArgumentError, 'Начальная станция не задана' if first_station.nil?
+    raise ArgumentError, 'Конечная станция не задана' if last_station.nil?
+  end
+
 end

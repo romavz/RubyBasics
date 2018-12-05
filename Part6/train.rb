@@ -19,6 +19,7 @@ class Train
     @speed = 0
     @current_station_index = nil
     @wagons = []
+    validate!
 
     @@trains[number] = self
     register_instance
@@ -27,7 +28,6 @@ class Train
   def self.find(number)
     @@trains[number] || "Поезд с номером /'#{number}/' не найден"
   end
-
 
   def add_wagon(wagon)
     wagons << wagon if stopped? && allowed_wagon?(wagon)
@@ -99,12 +99,23 @@ class Train
   # тип поезда
   def type; end
 
+  #=========================================
   protected
+  #=========================================
+
+  def validate!
+    message = "Задан недопустимый номер поезда: #{number}"
+    raise ArgumentError, message if number !~ /^([а-яА-Я]|\d){3}-([а-яА-Я]|\d){2}$/
+
+    message = "Задано недопустипое название поезда: #{train_name}"
+    raise ArgumentError, message if name !~ /^([а-яА-Я]|\d)([а-яА-Я\.\-\ ]|\d){,49}$/
+  end
 
   # наследники должны переопределить этот метод для разрешения вагонов,
   # соответствующих типу поезда
   def allowed_wagon?(wagon)
     wagon_number_is_valid?(wagon.number)
   end
+
 
 end

@@ -13,6 +13,7 @@ class Station
   def initialize(name)
     @name = name
     @trains = []
+    validate!
     @@stations << self
     register_instance
   end
@@ -27,5 +28,13 @@ class Station
 
   def depart_train(train)
     trains.delete(train)
+  end
+
+  protected
+
+  def validate!
+    raise ArgumentError, 'Название маршрута не задано' if name.nil?
+    message = 'Название маршрута должно быть от 1 до 50 символов, может содержать буквы, цифры, тире, пробелы, точки'
+    raise ArgumentError, message if name !~ /^([а-яА-Я]|\d)([а-яА-Я\.\-\ ]|\d){,49}$/  
   end
 end

@@ -66,7 +66,12 @@ class Application
       if current_menu[item_id].is_a?(Menu)
         current_menu = current_menu[item_id]
       else
-        current_menu[item_id].activate
+        begin
+          current_menu[item_id].activate
+        rescue ArgumentError => ex
+          puts "#{ex.message}. #{ex.backtrace}"
+          retry
+        end
       end
       current_menu.activate
     end

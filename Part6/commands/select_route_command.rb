@@ -12,8 +12,7 @@ class SelectRouteCommand < Command
     return if index == 0
 
     if route_index_not_valid?(index)
-      puts "Указан не верный номер маршрута"
-      return
+      raise ArgumentError, "Задан номер #{index}, должен быть 1..#{application.routes.count}"
     end
 
     route = application.routes[index - 1]

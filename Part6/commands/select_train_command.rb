@@ -11,9 +11,8 @@ class SelectTrainCommand < Command
 
     return if index == 0
 
-    if index_not_valid?(index)
-      puts "Указан не верный порядковый номер поезда"
-      return
+    if index_out_of_range?(index)
+      raise ArgumentError, "Задан номер #{index}, должен быть 1..#{application.trains.count}"
     end
 
     train = application.trains[index - 1]
@@ -22,7 +21,7 @@ class SelectTrainCommand < Command
 
   private
 
-  def index_not_valid?(index)
+  def index_out_of_range?(index)
     index < 1 || index > application.trains.count
   end
 
