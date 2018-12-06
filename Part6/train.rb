@@ -1,10 +1,12 @@
 require_relative 'vendor'
 require_relative 'instance_counter'
+require_relative 'instance_validator'
 
 class Train
 
   include Vendor
   include InstanceCounter
+  include InstanceValidator
 
   attr_reader :speed
   attr_reader :number
@@ -103,12 +105,15 @@ class Train
   protected
   #=========================================
 
-  def validate!
-    message = "Задан недопустимый номер поезда: #{number}"
-    raise ArgumentError, message if number !~ /^([а-яА-Я]|\d){3}-([а-яА-Я]|\d){2}$/
+  TRAIN_NUMBER_PATTERN = /^(\p{Alnum}){3}-(\p{Alnum}){2}$/i
+  NAME_PATTERN = /^(\p{Alnum})(\p{Alnum}|[\.\-\ ]){,49}$/i
 
-    message = "Задано недопустипое название поезда: #{train_name}"
-    raise ArgumentError, message if name !~ /^([а-яА-Я]|\d)([а-яА-Я\.\-\ ]|\d){,49}$/
+  def validate!
+    bad_train_number_message = "Задан недопустимый номер поезда: #{number}"
+    raise ArgumentError, bad_train_number_message if number !~ TRAIN_NUMBER_PATTERN
+
+    bad_train_name_message = "Задано недопустипое название поезда: #{name}"
+    raise ArgumentError, bad_train_name_message if name !~ NAME_PATTERN
   end
 
   # наследники должны переопределить этот метод для разрешения вагонов,

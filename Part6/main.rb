@@ -68,8 +68,8 @@ class Application
       else
         begin
           current_menu[item_id].activate
-        rescue ArgumentError => ex
-          puts "#{ex.message}. #{ex.backtrace}"
+        rescue StandardError => ex
+          puts ex.message
           retry
         end
       end

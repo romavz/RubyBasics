@@ -1,8 +1,10 @@
 require_relative 'instance_counter'
+require_relative 'instance_validator'
 
 class Route
 
   include InstanceCounter
+  include InstanceValidator
 
   attr_reader :stations
   attr_reader :name
@@ -43,13 +45,19 @@ class Route
     @stations.count
   end
 
+  #=========================================
   protected
+  #=========================================
+
+  NAME_PATTERN = /^(\p{Alnum})(\p{Alnum}|[\.\-\ ]){,49}$/i
 
   def validate!
-    message = 'Название маршрута должно состоять из одного и более слов'
-    raise ArgumentError, message if name !~ /^([а-яА-Я]|\d)([а-яА-Я\.\-\ ]|\d){,49}$/ 
+    bad_route_name_message = 'Название маршрута должно быть не более 50 символов и состоять из одного и более слов'
+    raise ArgumentError, bad_route_name_message if name !~ NAME_PATTERN
     raise ArgumentError, 'Начальная станция не задана' if first_station.nil?
     raise ArgumentError, 'Конечная станция не задана' if last_station.nil?
+    double_stations_message = 'Начальная и конечная станция должны быть разными'
+    raise ArgumentError, double_stations_message if first_station == last_station
   end
 
 end

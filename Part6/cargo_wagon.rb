@@ -13,8 +13,8 @@ class CargoWagon < Wagon
 
   def validate!
     super
-    message = "Грузоподъемность выходит за допустимые пределы 0..40000"
-    raise ArgumentError, message unless (0..40000).include?(load_capacity)
+    invalid_capacity_message = 'Грузоподъемность выходит за допустимые пределы 0..40000'
+    raise ArgumentError, invalid_capacity_message unless load_capacity.between?(0..40000)
   end
 
 end
