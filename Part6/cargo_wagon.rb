@@ -15,7 +15,7 @@ class CargoWagon < Wagon
 
   def validate!
     super
-    raise ArgumentError, INVALID_CAPACITY_MESSAGE unless load_capacity.between?(0,40000)
+    raise ArgumentError, INVALID_CAPACITY_MESSAGE unless load_capacity.between?(0, 40000)
   end
 
 end

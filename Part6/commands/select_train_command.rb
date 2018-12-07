@@ -2,7 +2,11 @@ require_relative '../train'
 require_relative 'command'
 
 class SelectTrainCommand < Command
+  TRAIN_LIST_IS_EMPTY = 'Список поездов пуст, перед выбором необходимо создать хотя-бы один поезд.'
+
   def execute
+    raise StandardError, TRAIN_LIST_IS_EMPTY if application.trains.count == 0
+
     train_already_selected = !application.selected_objects[:train].nil?
     return if train_already_selected
 

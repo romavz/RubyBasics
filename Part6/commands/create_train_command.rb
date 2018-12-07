@@ -3,10 +3,9 @@ require_relative 'command'
 class CreateTrainCommand < Command
   def execute
     print 'Введите номер поезда: '
-    number = gets.to_i
+    number = gets
     print 'Введите название поезда: '
     name = gets.chomp
-    return if name.nil?
 
     train = create_train(number, name)
     application.trains << train unless train.nil?

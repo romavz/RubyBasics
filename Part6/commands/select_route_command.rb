@@ -2,7 +2,11 @@ require_relative '../route'
 require_relative 'command'
 
 class SelectRouteCommand < Command
+  ROUTE_LIST_IS_EMPTY = 'Список маршрутов пуст, перед выбором необходимо создать хотя-бы один маршрут.'
+
   def execute
+    raise StandardError, ROUTE_LIST_IS_EMPTY if application.routes.count == 0
+
     route_already_selected = !application.selected_objects[:route].nil?
     return if route_already_selected
 

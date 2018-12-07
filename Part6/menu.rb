@@ -1,4 +1,7 @@
 class Menu < MenuItem
+  ITEM_ID_OUT_OF_RANGE = 'Выбранный идентификатор меню не найден: '
+
+
   def initialize(title, command)
     super(title, command)
     @menu_items = {}
@@ -11,7 +14,9 @@ class Menu < MenuItem
   end
 
   def [](item_id)
-    @menu_items[item_id]
+    @menu_items.fetch(item_id)
+  rescue KeyError
+    raise KeyError, ITEM_ID_OUT_OF_RANGE + "#{item_id}"
   end
 
   def activate

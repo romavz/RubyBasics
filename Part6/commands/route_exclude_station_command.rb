@@ -4,7 +4,7 @@ require_relative 'route_modify_command'
 
 class RouteExcludeStationCommand < RouteModifyCommand
   def do_execute
-    stations = application.stations
+    stations = route.stations
 
     show_route_stations(route)
     puts 'Введите порядковый номер станции для исключения из маршрута или \'0\' для отмены'

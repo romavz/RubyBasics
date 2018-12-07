@@ -15,7 +15,7 @@ class PassengerWagon < Wagon
 
   def validate!
     super
-    raise ArgumentError, INVALID_SEAT_COUNT_MESSAGE unless seat_count.between?(0,100)
+    raise ArgumentError, INVALID_SEAT_COUNT_MESSAGE unless seat_count.between?(0, 100)
   end
 
 end
