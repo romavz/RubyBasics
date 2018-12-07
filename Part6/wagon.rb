@@ -3,6 +3,10 @@ require_relative 'instance_validator'
 
 class Wagon
 
+  WAGON_NUMBER_PATTERN = /\d{1,5}/
+  BAD_WAGON_NUMBER = 'Номер вагона задан неверно: '
+  WAGON_NUMBER_NOT_DEFINED = 'Номер вагона не задан'
+
   include Vendor
   include InstanceValidator
 
@@ -18,8 +22,8 @@ class Wagon
   protected
 
   def validate!
-    message = "Номер вагона задан не верно: #{number}"
-    raise ArgumentError, message if number !~ /\d{1,5}/
+    raise ArgumentError, WAGON_NUMBER_NOT_DEFINED if number.nil?
+    raise ArgumentError, BAD_WAGON_NUMBER + "#{number}" if number !~ WAGON_NUMBER_PATTERN
   end
 
 end

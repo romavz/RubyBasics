@@ -2,6 +2,11 @@ require_relative 'instance_counter'
 require_relative 'instance_validator'
 
 class Station
+
+  NAME_PATTERN = /^\p{Alnum}\p{Alnum}|[\.\-\ ]{,49}$/
+  STATION_NAME_NOT_DEFINED = 'Название станции не задано'
+  BAD_STATION_NAME_MESSAGE = 'Название станции должно быть от 1 до 50 символов, может содержать буквы, цифры, тире, пробелы, точки'
+
   attr_reader :name, :trains
   @@stations = []
 
@@ -36,11 +41,8 @@ class Station
   protected
   #=========================================
 
-  NAME_PATTERN = /^(\p{Alnum})(\p{Alnum}|[\.\-\ ]){,49}$/i
-
   def validate!
-    raise ArgumentError, 'Название станции не задано' if name.nil?
-    bad_station_name_message = 'Название станции должно быть от 1 до 50 символов, может содержать буквы, цифры, тире, пробелы, точки'
-    raise ArgumentError, bad_station_name_message if name !~ NAME_PATTERN
+    raise ArgumentError, STATION_NAME_NOT_DEFINED if name.nil?
+    raise ArgumentError, BAD_STATION_NAME_MESSAGE if name !~ NAME_PATTERN
   end
 end
