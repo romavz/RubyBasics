@@ -3,6 +3,7 @@ require_relative 'command'
 
 class SelectTrainCommand < Command
   TRAIN_LIST_IS_EMPTY = 'Список поездов пуст, перед выбором необходимо создать хотя-бы один поезд.'
+  TRAIN_NOT_SELECTED = 'Поезд не выбран'
 
   def execute
     raise StandardError, TRAIN_LIST_IS_EMPTY if application.trains.count == 0
@@ -13,7 +14,7 @@ class SelectTrainCommand < Command
     print 'Введите порядковый номер поезда или 0 для отмены: '
     index = gets.to_i
 
-    return if index == 0
+    raise StandardError, TRAIN_NOT_SELECTED if index.zero?
 
     if index_out_of_range?(index)
       raise ArgumentError, "Задан номер #{index}, должен быть 1..#{application.trains.count}"
@@ -28,5 +29,4 @@ class SelectTrainCommand < Command
   def index_out_of_range?(index)
     index < 1 || index > application.trains.count
   end
-
 end

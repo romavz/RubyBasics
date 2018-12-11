@@ -3,7 +3,7 @@ require_relative 'command'
 class CreateTrainCommand < Command
   def execute
     print 'Введите номер поезда: '
-    number = gets
+    number = gets.chomp
     print 'Введите название поезда: '
     name = gets.chomp
 

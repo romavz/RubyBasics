@@ -4,6 +4,6 @@ class WagonCreateStrategy
 
   def create_wagon
     print 'Введите номер вагона: '
-    @number = gets.to_i
+    @number = gets.chomp
   end
 end

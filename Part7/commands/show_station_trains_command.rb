@@ -23,8 +23,12 @@ class ShowStationTrainsCommand < Command
 
     puts "Поезда на станции: #{station_name}:"
     puts "Поездов нет." if station.trains.count.zero?
-    station.trains.each do |train|
+    station.each_train do |train|
       puts "  №#{train.number} - #{train.name} (#{train.type})"
+      train.each_wagon do |wagon|
+        wagon.properties.each { |property| puts "    #{property}" }
+      end
+      puts " "
     end
     puts " "
   end

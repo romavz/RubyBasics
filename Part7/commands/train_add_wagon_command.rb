@@ -8,8 +8,8 @@ class TrainAddWagonCommand < TrainModifyCommand
   def initialize(application)
     super(application)
     @wagon_creators = {
-      CargoTrain => CargoWagonCreateStrategy.new(),
-      PassengerTrain => PassengerWagonCreateStrategy.new()
+      CargoTrain => CargoWagonCreateStrategy.new,
+      PassengerTrain => PassengerWagonCreateStrategy.new
     }
   end
 
@@ -27,7 +27,7 @@ class TrainAddWagonCommand < TrainModifyCommand
   attr_reader :wagon_creators
 
   def wagon_creator
-    return wagon_creators[train.class]
+    wagon_creators[train.class]
   end
 
 end

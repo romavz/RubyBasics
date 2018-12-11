@@ -10,6 +10,8 @@ require_relative './passenger_train.rb'
 require_relative './route.rb'
 require_relative './station.rb'
 
+require_relative './commands/command.rb'
+require_relative './commands/multi_command.rb'
 require_relative './commands/route_exclude_station_command.rb'
 require_relative './commands/train_go_prev_station_command.rb'
 require_relative './commands/show_station_trains_command.rb'
@@ -32,9 +34,14 @@ require_relative './commands/train_set_route_command.rb'
 require_relative './commands/modify_command_base.rb'
 require_relative './commands/train_go_next_station_command.rb'
 require_relative './commands/train_modify_command.rb'
-require_relative './commands/command.rb'
 require_relative './commands/create_train_command.rb'
 require_relative './commands/train_unhook_wagon_command.rb'
+require_relative './commands/train_show_wagons_command.rb'
+require_relative './commands/wagon_modify_command.rb'
+require_relative './commands/wagon_take_a_seat_command.rb'
+require_relative './commands/wagon_load_command.rb'
+require_relative 'train_context_menu.rb'
+
 
 class Application
   attr_reader :stations
@@ -72,12 +79,12 @@ class Application
       begin
         selected_item = current_menu[item_id]
         selected_item.activate
-      rescue StandardError => ex
-        puts ex.message
-        current_menu.activate
-      else
         current_menu = selected_item if selected_item.is_a?(Menu)
+      rescue StandardError => ex
+        puts "#{ex.message}"
+        puts ex.backtrace.inspect
       end
+      current_menu.activate if selected_item.class == MenuItem
     end
   end
 
@@ -93,8 +100,8 @@ class Application
 
   def stations_menu(parent_menu)
     menu = Menu.new('Станции', ShowStationsCommand.new(self))
-    menu.add('1', MenuItem.new('Создать станцию', CreateStationCommand.new(self)))
-    menu.add('2', MenuItem.new('Показать список поездов на станции', ShowStationTrainsCommand.new(self)))
+    menu.add('2', MenuItem.new('Создать станцию', CreateStationCommand.new(self)))
+    menu.add('3', MenuItem.new('Показать список поездов на станции', ShowStationTrainsCommand.new(self)))
     menu.add('0', parent_menu)
     menu
   end
@@ -110,15 +117,29 @@ class Application
   end
 
   def select_train_menu(parent_menu)
-    menu = Menu.new('Выбрать поезд', SelectTrainCommand.new(self))
+    menu = TrainContextMenu.new('Выбрать поезд', select_train_command, self)
     menu.add('1', MenuItem.new('Назначить маршрут', TrainSetRouteCommand.new(self)))
     menu.add('2', MenuItem.new('Прицепить вагон', TrainAddWagonCommand.new(self)))
     menu.add('3', MenuItem.new('Отцепить вагон', TrainUnhookWagonCommand.new(self)))
     menu.add('4', MenuItem.new('Изменить скорость', TrainChangeSpeedCommand.new(self)))
     menu.add('5', MenuItem.new('Отправить на следующую станцию', TrainGoNextStationCommand.new(self)))
     menu.add('6', MenuItem.new('Вернуть на предыдущую станцию', TrainGoPrevStationCommand.new(self)))
+    menu.add('7', MenuItem.new('Занять место / загрузить вагон', nil))
+    menu.add('8', MenuItem.new('Показать состав поезда', show_wagons_command))
     menu.add('0', clear_selection_decorator(parent_menu))
     menu
+  end
+
+  def select_train_command
+    select_train_cmd = MultiCommand.new(self)
+    select_train_cmd.add(SelectTrainCommand.new(self))
+    select_train_cmd.add(show_wagons_command)
+    select_train_cmd
+  end
+
+  def show_wagons_command
+    @show_wagons_command = TrainShowWagonsCommand.new(self) if @show_wagons_command.nil?
+    @show_wagons_command
   end
 
   def routes_menu(parent_menu)

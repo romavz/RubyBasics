@@ -92,9 +92,10 @@ class Application
   end
 
   def stations_menu(parent_menu)
-    menu = Menu.new('Станции', ShowStationsCommand.new(self))
-    menu.add('1', MenuItem.new('Создать станцию', CreateStationCommand.new(self)))
-    menu.add('2', MenuItem.new('Показать список поездов на станции', ShowStationTrainsCommand.new(self)))
+    menu = Menu.new('Станции')
+    menu.add('1', MenuItem.new('Показать все станции', ShowStationsCommand.new(self)))
+    menu.add('2', MenuItem.new('Создать станцию', CreateStationCommand.new(self)))
+    menu.add('3', MenuItem.new('Показать список поездов на станции', ShowStationTrainsCommand.new(self)))
     menu.add('0', parent_menu)
     menu
   end
