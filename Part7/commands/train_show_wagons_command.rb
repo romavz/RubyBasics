@@ -13,9 +13,12 @@ class TrainShowWagonsCommand < Command
 
   def show_wagons(train)
     index = 0
+    return if train.wagons.count.zero?
+    puts 'Состав:'
     train.each_wagon do |wagon|
       index += 1
       puts "#{index}. #{wagon.properties}"
     end
+    puts ' '
   end
 end

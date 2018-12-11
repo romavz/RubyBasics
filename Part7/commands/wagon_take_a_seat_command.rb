@@ -4,7 +4,7 @@ require_relative 'wagon_modify_command'
 class WagonTakeASeatCommand < WagonModifyCommand
 
   def do_execute(wagon)
-    wagon.take_a_seat
+    wagon.take_a_space(1)
   end
 
 end

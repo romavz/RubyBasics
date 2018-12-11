@@ -5,7 +5,7 @@ class WagonLoadCommand < WagonModifyCommand
   def do_execute(wagon)
     print 'Введите объем загрузки: '
     volume = gets.to_i
-    wagon.fill_volume(volume)
+    wagon.take_a_space(volume)
   end
 
 end
