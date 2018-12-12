@@ -31,8 +31,8 @@ class Wagon
   end
 
   def take_a_space(volume)
-    raise StandardError, all_space_taken_message if free_space == 0
-    raise StandardError, not_enough_space_message + "#{free_space}" if free_space - volume < 0
+    raise all_space_taken_message if free_space.zero?
+    raise not_enough_space_message + "#{free_space}" if free_space - volume < 0
     @taken_space += volume
   end
 
@@ -76,7 +76,7 @@ class Wagon
   end
 
   def invalid_capacity?
-    !(capacity.between?(1, max_capacity))
+    !capacity.between?(1, max_capacity)
   end
 
 end

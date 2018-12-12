@@ -10,6 +10,9 @@ class PassengerWagon < Wagon
     super
   end
 
+  def take_a_space(seat_count = 1)
+    raise ArgumentError, SEATS_COUNT_TO_MATCH if seat_count > 1
+    super(seat_count)
   protected
 
   def max_capacity
