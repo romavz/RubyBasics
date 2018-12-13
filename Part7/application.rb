@@ -78,11 +78,11 @@ class Application
       item_id = gets.chomp!
       begin
         selected_item = current_menu[item_id]
+        next if selected_item.nil?
         selected_item.activate
         current_menu = selected_item if selected_item.is_a?(Menu)
       rescue StandardError => ex
         puts "#{ex.message}"
-        puts ex.backtrace.inspect
       end
       current_menu.activate if selected_item.class == MenuItem
     end
