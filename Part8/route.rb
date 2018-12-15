@@ -2,14 +2,12 @@ require_relative 'instance_counter'
 require_relative 'instance_validator'
 
 class Route
-
-  NAME_PATTERN = /^\p{Alnum}\p{Alnum}|[\.\-\ ]{,49}$/
-  ROUTE_NAME_NOT_DEFINED = 'Название маршрута не определено'
-  BAD_ROUTE_NAME_MESSAGE = 'Название маршрута должно быть не более 50 символов и состоять из одного и более слов'
-  DOUBLE_STATIONS_MESSAGE = 'Начальная и конечная станция должны быть разными'
-  FIRST_STATION_NIL_MESSAGE = 'Начальная станция не задана'
-  LAST_STATION_NIL_MESSAGE = 'Конечная станция не задана'
-
+  NAME_PATTERN = /^\p{Alnum}\p{Alnum}|[\.\-\ ]{,49}$/.freeze
+  ROUTE_NAME_NOT_DEFINED = 'Название маршрута не определено'.freeze
+  BAD_ROUTE_NAME_MESSAGE = 'Название маршрута должно быть не более 50 символов и состоять из одного и более слов'.freeze
+  DOUBLE_STATIONS_MESSAGE = 'Начальная и конечная станция должны быть разными'.freeze
+  FIRST_STATION_NIL_MESSAGE = 'Начальная станция не задана'.freeze
+  LAST_STATION_NIL_MESSAGE = 'Конечная станция не задана'.freeze
 
   include InstanceCounter
   include InstanceValidator
@@ -55,6 +53,7 @@ class Route
 
   #=========================================
   protected
+
   #=========================================
 
   def validate!
@@ -64,5 +63,4 @@ class Route
     raise ArgumentError, LAST_STATION_NIL_MESSAGE if last_station.nil?
     raise ArgumentError, DOUBLE_STATIONS_MESSAGE if first_station == last_station
   end
-
 end

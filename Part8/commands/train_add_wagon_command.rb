@@ -4,7 +4,6 @@ require_relative '../strategies/cargo_wagon_create_strategy'
 require_relative '../strategies/passenger_wagon_create_strategy'
 
 class TrainAddWagonCommand < TrainModifyCommand
-
   def initialize(application)
     super(application)
     @wagon_creators = {
@@ -29,5 +28,4 @@ class TrainAddWagonCommand < TrainModifyCommand
   def wagon_creator
     wagon_creators[train.class]
   end
-
 end

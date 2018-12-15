@@ -1,14 +1,14 @@
 require_relative 'command'
 
 class WagonModifyCommand < Command
-  WAGON_INDEX_OUT_OF_RANGE = 'Номер вагона за пределами списка'
+  WAGON_INDEX_OUT_OF_RANGE = 'Номер вагона за пределами списка'.freeze
 
   def execute
     train = application.selected_objects[:train]
 
     print 'Введите номер вагона по списку или \'0\' для выхода: '
     wagon_index = gets.to_i
-    return if wagon_index == 0
+    return if wagon_index.zero?
 
     validate_wagon_index!(wagon_index, train)
     wagon = train.wagons[wagon_index - 1]
@@ -21,10 +21,11 @@ class WagonModifyCommand < Command
 
   def validate_wagon_index!(wagon_index, train)
     raise ArgumentError, WAGON_INDEX_OUT_OF_RANGE unless wagon_index.between?(1, train.wagons.count)
+
     true
   end
 
   def show_wagon_state(wagon)
-    puts "#{wagon.properties}"
+    puts wagon.properties.to_s
   end
 end

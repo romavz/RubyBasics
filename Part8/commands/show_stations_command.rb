@@ -3,8 +3,9 @@ require_relative 'command'
 
 class ShowStationsCommand < Command
   def execute
-    puts 'Станций нет' if application.stations.count == 0
-    application.stations.each_with_index { |station, index| puts " #{index + 1}.  #{station.name}" }
+    stations = application.stations
+    puts 'Станций нет' if stations.count.zero?
+    stations.each_with_index { |station, index| puts " #{index + 1}.  #{station.name}" }
     puts ' '
   end
 end

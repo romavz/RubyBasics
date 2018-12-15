@@ -2,21 +2,19 @@ require_relative 'vendor'
 require_relative 'instance_validator'
 
 class Wagon
+  WAGON_NUMBER_PATTERN = /\d{1,5}/.freeze
+  BAD_WAGON_NUMBER = 'Номер вагона задан неверно: '.freeze
+  WAGON_NUMBER_NOT_DEFINED = 'Номер вагона не задан'.freeze
 
-  WAGON_NUMBER_PATTERN = /\d{1,5}/
-  BAD_WAGON_NUMBER = 'Номер вагона задан неверно: '
-  WAGON_NUMBER_NOT_DEFINED = 'Номер вагона не задан'
-
-  ALL_SPACE_TAKEN_MESSAGE = 'В вагоне нет свободного места'
-  NOT_ENOUGH_SPACE_MESSAGE = 'В вагоне недостаточно места'
-  INVALID_CAPACITY_MESSAGE = 'Задано недопустимое значение  вместимости: '
+  ALL_SPACE_TAKEN_MESSAGE = 'В вагоне нет свободного места'.freeze
+  NOT_ENOUGH_SPACE_MESSAGE = 'В вагоне недостаточно места'.freeze
+  INVALID_CAPACITY_MESSAGE = 'Задано недопустимое значение  вместимости: '.freeze
 
   include Vendor
   include InstanceValidator
 
   attr_reader :number
   attr_reader :capacity
-  attr_reader :properties
   attr_reader :taken_space
 
   def initialize(number, capacity = 0)
@@ -24,7 +22,7 @@ class Wagon
     @capacity = capacity.to_i
     @properties = {
       number: "номер вагона: #{number}",
-      capacity: "емкость: #{capacity}",
+      capacity: "емкость: #{capacity}"
     }
     @taken_space = 0
     validate!
@@ -32,7 +30,8 @@ class Wagon
 
   def take_a_space(volume)
     raise all_space_taken_message if free_space.zero?
-    raise not_enough_space_message + "#{free_space}" if free_space - volume < 0
+    raise not_enough_space_message + free_space.to_s if free_space - volume < 0
+
     @taken_space += volume
   end
 
@@ -50,13 +49,13 @@ class Wagon
 
   #==========================
   def max_capacity
-    1 #перегрузить в наследниках
+    1 # перегрузить в наследниках
   end
 
   def validate!
     raise ArgumentError, WAGON_NUMBER_NOT_DEFINED if number.nil?
-    raise ArgumentError, BAD_WAGON_NUMBER + "#{number}" if number !~ WAGON_NUMBER_PATTERN
-    raise ArgumentError, invalid_capacity_message + "#{capacity}" if invalid_capacity?
+    raise ArgumentError, BAD_WAGON_NUMBER + number.to_s if number !~ WAGON_NUMBER_PATTERN
+    raise ArgumentError, invalid_capacity_message + capacity.to_s if invalid_capacity?
   end
   #==========================
 
@@ -64,19 +63,18 @@ class Wagon
 
   #==========================
   def all_space_taken_message
-   self.class::ALL_SPACE_TAKEN_MESSAGE
+    self.class::ALL_SPACE_TAKEN_MESSAGE
   end
 
   def invalid_capacity_message
-   self.class::INVALID_CAPACITY_MESSAGE
+    self.class::INVALID_CAPACITY_MESSAGE
   end
 
   def not_enough_space_message
-   self.class::NOT_ENOUGH_SPACE_MESSAGE
+    self.class::NOT_ENOUGH_SPACE_MESSAGE
   end
 
   def invalid_capacity?
     !capacity.between?(1, max_capacity)
   end
-
 end

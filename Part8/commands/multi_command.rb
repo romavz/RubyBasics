@@ -15,5 +15,4 @@ class MultiCommand < Command
   def execute
     commands.each(&:execute)
   end
-
 end

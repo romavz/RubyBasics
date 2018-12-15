@@ -3,8 +3,6 @@ require_relative 'command'
 class ModifyCommandBase < Command
   # шаблонный метод
   def execute
-    target_object = get_target_object
-
     if target_object.nil?
       target_not_selected_message
       return
@@ -14,7 +12,7 @@ class ModifyCommandBase < Command
 
   protected
 
-  def get_target_object
+  def target_object
     # переопределить в наследниках
   end
 

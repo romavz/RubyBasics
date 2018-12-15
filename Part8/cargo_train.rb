@@ -2,7 +2,6 @@ require_relative 'train'
 
 #  Грузовой поезд
 class CargoTrain < Train
-
   def type
     'Грузовой'
   end
@@ -12,5 +11,4 @@ class CargoTrain < Train
   def allowed_wagon?(wagon)
     wagon.is_a?(CargoWagon) && super
   end
-
 end

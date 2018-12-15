@@ -1,32 +1,33 @@
 require_relative '../route'
 require_relative 'command'
+require_relative '../extentions/index_validator'
 
 class SelectRouteCommand < Command
-  ROUTE_LIST_IS_EMPTY = 'Список маршрутов пуст, перед выбором необходимо создать хотя-бы один маршрут.'
+  ROUTE_LIST_IS_EMPTY = "Список маршрутов пуст, перед выбором необходимо создать хотя-бы один маршрут.".freeze
+  ROUTE_INDEX_OUT_OF_RANGE = "Неправильный номер маршрута, должен быть 1..".freeze
+  INVITATION_MSG = "Введите порядковый номер маршрута или 0 для отмены: ".freeze
+
+  include IndexValidator
 
   def execute
-    raise StandardError, ROUTE_LIST_IS_EMPTY if application.routes.count == 0
+    routes = application.routes
+    raise StandardError, ROUTE_LIST_IS_EMPTY if routes.count.zero?
 
     route_already_selected = !application.selected_objects[:route].nil?
     return if route_already_selected
 
-    print 'Введите порядковый номер маршрута или 0 для отмены: '
+    print INVITATION_MSG
     index = gets.to_i
+    return if index.zero?
 
-    return if index == 0
-
-    if route_index_not_valid?(index)
-      raise ArgumentError, "Задан номер #{index}, должен быть 1..#{application.routes.count}"
-    end
-
-    route = application.routes[index - 1]
+    validate_index!(index, routes.count)
+    route = routes[index - 1]
     application.selected_objects[:route] = route
   end
 
-  private
+  protected
 
-  def route_index_not_valid?(index)
-    index < 1 || index > application.routes.count
+  def index_out_of_range_msg
+    ROUTE_INDEX_OUT_OF_RANGE
   end
-
 end

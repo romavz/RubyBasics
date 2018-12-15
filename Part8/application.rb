@@ -42,7 +42,6 @@ require_relative './commands/wagon_take_a_seat_command.rb'
 require_relative './commands/wagon_load_command.rb'
 require_relative 'train_context_menu.rb'
 
-
 class Application
   attr_reader :stations
   attr_reader :routes
@@ -73,16 +72,17 @@ class Application
   #-----------------------------
   private
 
-  def do_main_loop (current_menu)
+  def do_main_loop(current_menu)
     loop do
       item_id = gets.chomp!
       begin
         selected_item = current_menu[item_id]
         next if selected_item.nil?
+
         selected_item.activate
         current_menu = selected_item if selected_item.is_a?(Menu)
       rescue StandardError => ex
-        puts "#{ex.message}"
+        puts ex.message.to_s
       end
       current_menu.activate if selected_item.class == MenuItem
     end
@@ -100,8 +100,8 @@ class Application
 
   def stations_menu(parent_menu)
     menu = Menu.new('Станции', ShowStationsCommand.new(self))
-    menu.add('2', MenuItem.new('Создать станцию', CreateStationCommand.new(self)))
-    menu.add('3', MenuItem.new('Показать список поездов на станции', ShowStationTrainsCommand.new(self)))
+    menu.add('1', MenuItem.new('Создать станцию', CreateStationCommand.new(self)))
+    menu.add('2', MenuItem.new('Показать список поездов на станции', ShowStationTrainsCommand.new(self)))
     menu.add('0', parent_menu)
     menu
   end
@@ -154,7 +154,6 @@ class Application
 
   def select_route_menu(parent_menu)
     menu = Menu.new('Выбрать маршрут', SelectRouteCommand.new(self))
-    # выбрать маршрут
     menu.add('1', MenuItem.new('Добавить станцию', RouteIncludeStationCommand.new(self)))
     menu.add('2', MenuItem.new('Исключить станцию', RouteExcludeStationCommand.new(self)))
     menu.add('0', clear_selection_decorator(parent_menu))

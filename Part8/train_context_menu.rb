@@ -4,8 +4,8 @@ require_relative 'menu'
 require_relative 'application'
 
 class TrainContextMenu < Menu
-  APPLICATION_NOT_DEFINED = 'Ссылка на приложение не задана'
-  INVALID_ARGUMENT_TYPE = 'Неверный тип аргумента: application'
+  APPLICATION_NOT_DEFINED = 'Ссылка на приложение не задана'.freeze
+  INVALID_ARGUMENT_TYPE = 'Неверный тип аргумента: application'.freeze
 
   attr_reader :application
 
@@ -29,5 +29,4 @@ class TrainContextMenu < Menu
   private
 
   attr_reader :context_menu
-
 end

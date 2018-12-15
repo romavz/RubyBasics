@@ -1,4 +1,3 @@
-
 class WagonCreateStrategy
   attr_reader :number
 

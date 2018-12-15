@@ -6,7 +6,7 @@ class TrainModifyCommand < ModifyCommandBase
 
   protected
 
-  def get_target_object
+  def target_object
     @train = application.selected_objects[:train]
     train
   end

@@ -3,13 +3,12 @@ require_relative 'instance_counter'
 require_relative 'instance_validator'
 
 class Train
-
-  TRAIN_NUMBER_PATTERN = /^\p{Alnum}{3}-?\p{Alnum}{2}$/
-  NAME_PATTERN = /^\p{Alnum}\p{Alnum}|[\.\-\ ]{,49}$/
-  TRAIN_NUMBER_NOT_DEFINED = 'Номер поезда не задан'
-  TRAIN_NAME_NOT_DEFINED = 'Название поезда не задано'
-  BAD_TRAIN_NUMBER_MESSAGE = "Задан недопустимый номер поезда: "
-  BAD_TRAIN_NAME_MESSAGE = "Задано недопустипое название поезда: "
+  TRAIN_NUMBER_PATTERN = /^\p{Alnum}{3}-?\p{Alnum}{2}$/.freeze
+  NAME_PATTERN = /^\p{Alnum}\p{Alnum}|[\.\-\ ]{,49}$/.freeze
+  TRAIN_NUMBER_NOT_DEFINED = 'Номер поезда не задан'.freeze
+  TRAIN_NAME_NOT_DEFINED = 'Название поезда не задано'.freeze
+  BAD_TRAIN_NUMBER_MESSAGE = 'Задан недопустимый номер поезда: '.freeze
+  BAD_TRAIN_NAME_MESSAGE = 'Задано недопустипое название поезда: '.freeze
 
   include Vendor
   include InstanceCounter
@@ -35,7 +34,7 @@ class Train
   end
 
   def each_wagon
-    wagons.each {|wagon| yield(wagon) }
+    wagons.each { |wagon| yield(wagon) }
   end
 
   def self.find(number)
@@ -64,7 +63,7 @@ class Train
   end
 
   def stopped?
-    speed == 0
+    speed.zero?
   end
 
   def route=(route)
@@ -114,13 +113,14 @@ class Train
 
   #=========================================
   protected
+
   #=========================================
 
   def validate!
     raise ArgumentError, TRAIN_NAME_NOT_DEFINED if name.nil?
     raise ArgumentError, TRAIN_NUMBER_NOT_DEFINED if number.nil?
-    raise ArgumentError, BAD_TRAIN_NUMBER_MESSAGE + "#{number}" if number !~ TRAIN_NUMBER_PATTERN
-    raise ArgumentError, BAD_TRAIN_NAME_MESSAGE + "#{name}" if name !~ NAME_PATTERN
+    raise ArgumentError, BAD_TRAIN_NUMBER_MESSAGE + number.to_s if number !~ TRAIN_NUMBER_PATTERN
+    raise ArgumentError, BAD_TRAIN_NAME_MESSAGE + name.to_s if name !~ NAME_PATTERN
   end
 
   # наследники должны переопределить этот метод для разрешения вагонов,
@@ -128,6 +128,4 @@ class Train
   def allowed_wagon?(wagon)
     wagon_number_is_valid?(wagon.number)
   end
-
-
 end
