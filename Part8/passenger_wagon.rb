@@ -12,7 +12,7 @@ class PassengerWagon < Wagon
   end
 
   def take_a_space(seat_count)
-    rise ArgumentError, SEATS_COUNT_TOO_MUTCH if seat_count != 1
+    raise ArgumentError, SEATS_COUNT_TOO_MUTCH if seat_count != 1
     super(1)
   end
 

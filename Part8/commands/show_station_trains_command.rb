@@ -6,7 +6,6 @@ class ShowStationTrainsCommand < Command
   def execute
     print 'Введите номер станции: '
     index = gets.to_i
-
     return if index.zero?
 
     if index_not_valid?(index)
@@ -21,6 +20,12 @@ class ShowStationTrainsCommand < Command
       return
     end
 
+    show_station_trains(station)
+  end
+
+  private
+
+  def show_station_trains(station)
     puts "Поезда на станции: #{station_name}:"
     puts 'Поездов нет.' if station.trains.count.zero?
     station.each_train do |train|
@@ -28,9 +33,7 @@ class ShowStationTrainsCommand < Command
       train.each_wagon do |wagon|
         wagon.properties.each { |property| puts "    #{property}" }
       end
-      puts ' '
     end
-    puts ' '
   end
 
   def index_not_valid?(index)
