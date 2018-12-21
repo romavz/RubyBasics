@@ -1,5 +1,6 @@
 require_relative 'vendor'
 require_relative 'instance_validator'
+require_relative 'extentions/validation'
 
 class Wagon
   WAGON_NUMBER_PATTERN = /\d{1,5}/.freeze
@@ -11,7 +12,7 @@ class Wagon
   INVALID_CAPACITY_MESSAGE = 'Задано недопустимое значение  вместимости: '.freeze
 
   include Vendor
-  include InstanceValidator
+  include Validation
 
   attr_reader :number
   attr_reader :capacity
@@ -52,9 +53,12 @@ class Wagon
     1 # перегрузить в наследниках
   end
 
+  validate :number, :presence
+  validate :number, :type, String
+  validate :number, :format, WAGON_NUMBER_PATTERN
+
   def validate!
-    raise ArgumentError, WAGON_NUMBER_NOT_DEFINED if number.nil?
-    raise ArgumentError, BAD_WAGON_NUMBER + number.to_s if number !~ WAGON_NUMBER_PATTERN
+    super
     raise ArgumentError, invalid_capacity_message + capacity.to_s if invalid_capacity?
   end
   #==========================

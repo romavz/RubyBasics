@@ -1,6 +1,6 @@
 require_relative 'vendor'
 require_relative 'instance_counter'
-require_relative 'instance_validator'
+require_relative 'extentions/validation'
 
 class Train
   TRAIN_NUMBER_PATTERN = /^\p{Alnum}{3}-?\p{Alnum}{2}$/.freeze
@@ -12,7 +12,7 @@ class Train
 
   include Vendor
   include InstanceCounter
-  include InstanceValidator
+  include Validation
 
   attr_reader :speed
   attr_reader :number
@@ -116,12 +116,10 @@ class Train
 
   #=========================================
 
-  def validate!
-    raise ArgumentError, TRAIN_NAME_NOT_DEFINED if name.nil?
-    raise ArgumentError, TRAIN_NUMBER_NOT_DEFINED if number.nil?
-    raise ArgumentError, BAD_TRAIN_NUMBER_MESSAGE + number.to_s if number !~ TRAIN_NUMBER_PATTERN
-    raise ArgumentError, BAD_TRAIN_NAME_MESSAGE + name.to_s if name !~ NAME_PATTERN
-  end
+  validate :name, :presence
+  validate :name, :format, NAME_PATTERN
+  validate :number, :presence
+  validate :number, :format, TRAIN_NUMBER_PATTERN
 
   # наследники должны переопределить этот метод для разрешения вагонов,
   # соответствующих типу поезда

@@ -1,5 +1,5 @@
 require_relative 'instance_counter'
-require_relative 'instance_validator'
+require_relative 'extentions/validation'
 
 class Station
   NAME_PATTERN = /^\p{Alnum}\p{Alnum}|[\.\-\ ]{,49}$/.freeze
@@ -10,7 +10,7 @@ class Station
   @@stations = []
 
   include InstanceCounter
-  include InstanceValidator
+  include Validation
 
   def self.all
     @@stations
@@ -40,13 +40,6 @@ class Station
     trains.delete(train)
   end
 
-  #=========================================
-  protected
-
-  #=========================================
-
-  def validate!
-    raise ArgumentError, STATION_NAME_NOT_DEFINED if name.nil?
-    raise ArgumentError, BAD_STATION_NAME_MESSAGE if name !~ NAME_PATTERN
-  end
+  validate :name, :presence
+  validate :name, :format, NAME_PATTERN
 end

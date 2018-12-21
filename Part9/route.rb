@@ -1,5 +1,5 @@
 require_relative 'instance_counter'
-require_relative 'instance_validator'
+require_relative 'extentions/validation'
 
 class Route
   NAME_PATTERN = /^\p{Alnum}\p{Alnum}|[\.\-\ ]{,49}$/.freeze
@@ -10,7 +10,7 @@ class Route
   LAST_STATION_NIL_MESSAGE = 'Конечная станция не задана'.freeze
 
   include InstanceCounter
-  include InstanceValidator
+  include Validation
 
   attr_reader :stations
   attr_reader :name
@@ -56,11 +56,15 @@ class Route
 
   #=========================================
 
+  validate :name, :presence
+  validate :name, :format, NAME_PATTERN
+  validate :first_station, :presence
+  validate :first_station, :type, Station
+  validate :last_station, :presence
+  validate :last_station, :type, Station
+
   def validate!
-    raise ArgumentError, ROUTE_NAME_NOT_DEFINED if name.nil?
-    raise ArgumentError, BAD_ROUTE_NAME_MESSAGE if name !~ NAME_PATTERN
-    raise ArgumentError, FIRST_STATION_NIL_MESSAGE if first_station.nil?
-    raise ArgumentError, LAST_STATION_NIL_MESSAGE if last_station.nil?
+    super
     raise ArgumentError, DOUBLE_STATIONS_MESSAGE if first_station == last_station
   end
 end
