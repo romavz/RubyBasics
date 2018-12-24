@@ -12,8 +12,14 @@ class Route
   include InstanceCounter
   include Validation
 
-  attr_reader :stations
-  attr_reader :name
+  attr_reader :name, :stations
+
+  validate :name, :presence
+  validate :name, :format, NAME_PATTERN
+  validate :first_station, :presence
+  validate :first_station, :type, Station
+  validate :last_station, :presence
+  validate :last_station, :type, Station
 
   def initialize(name, first_station, last_station)
     @name = name
@@ -55,13 +61,6 @@ class Route
   protected
 
   #=========================================
-
-  validate :name, :presence
-  validate :name, :format, NAME_PATTERN
-  validate :first_station, :presence
-  validate :first_station, :type, Station
-  validate :last_station, :presence
-  validate :last_station, :type, Station
 
   def validate!
     super

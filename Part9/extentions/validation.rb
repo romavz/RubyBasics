@@ -55,8 +55,13 @@ module Validation
     validations = self.class.send(:validations)
     validations.each do |item|
       validator = item[:validator]
-      field = "@#{item[:field]}"
-      value = instance_variable_get(field)
+      field = "@#{item[:field]}".to_sym
+      value = nil
+      if instance_variables.include?(field)
+        instance_variable_get(field)
+      else
+        send(item[:field])
+      end
       args = item[:args]
       validator.call(field, value, *args)
     end

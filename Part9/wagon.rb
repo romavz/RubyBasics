@@ -18,6 +18,10 @@ class Wagon
   attr_reader :capacity
   attr_reader :taken_space
 
+  validate :number, :presence
+  validate :number, :type, String
+  validate :number, :format, WAGON_NUMBER_PATTERN
+
   def initialize(number, capacity = 0)
     @number = number
     @capacity = capacity.to_i
@@ -52,10 +56,6 @@ class Wagon
   def max_capacity
     1 # перегрузить в наследниках
   end
-
-  validate :number, :presence
-  validate :number, :type, String
-  validate :number, :format, WAGON_NUMBER_PATTERN
 
   def validate!
     super

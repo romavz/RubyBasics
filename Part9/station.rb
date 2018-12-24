@@ -6,11 +6,14 @@ class Station
   STATION_NAME_NOT_DEFINED = 'Название станции не задано'.freeze
   BAD_STATION_NAME_MESSAGE = 'Название станции не соответствует шаблону'.freeze
 
+  include InstanceCounter
+  include Validation
+
   attr_reader :name, :trains
   @@stations = []
 
-  include InstanceCounter
-  include Validation
+  validate :name, :presence
+  validate :name, :format, NAME_PATTERN
 
   def self.all
     @@stations
@@ -39,7 +42,4 @@ class Station
   def depart_train(train)
     trains.delete(train)
   end
-
-  validate :name, :presence
-  validate :name, :format, NAME_PATTERN
 end

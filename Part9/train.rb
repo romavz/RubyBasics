@@ -14,12 +14,13 @@ class Train
   include InstanceCounter
   include Validation
 
-  attr_reader :speed
-  attr_reader :number
-  attr_reader :route
-  attr_reader :name
-  attr_reader :wagons
+  attr_reader :speed, :number, :route, :name, :wagons
   @@trains = {}
+
+  validate :name, :presence
+  validate :name, :format, NAME_PATTERN
+  validate :number, :presence
+  validate :number, :format, TRAIN_NUMBER_PATTERN
 
   def initialize(number, name)
     @number = number
@@ -115,11 +116,6 @@ class Train
   protected
 
   #=========================================
-
-  validate :name, :presence
-  validate :name, :format, NAME_PATTERN
-  validate :number, :presence
-  validate :number, :format, TRAIN_NUMBER_PATTERN
 
   # наследники должны переопределить этот метод для разрешения вагонов,
   # соответствующих типу поезда

@@ -20,10 +20,10 @@ module Accessor
             instance_variable_set(history_var, [])
         end
 
-        define_method(attr) { instance_variable_get(attr_name) || nil }
+        define_method(attr) { instance_variable_get(attr_name) }
         define_method("#{attr}=") do |value|
-          attr_value = method(attr).call
-          history = method(attr_history).call
+          attr_value = send(attr)
+          history = send(attr_history)
           first_assign = history.empty? && attr_value.nil?
           history << attr_value unless first_assign || value == attr_value
           instance_variable_set(attr_name, value)
@@ -35,8 +35,7 @@ module Accessor
       raise TypeError, ATTR_NAME_NOT_SYMBOL unless name.is_a?(Symbol)
 
       define_method(name) do
-        instance_variable_get("@#{name}") ||
-          instance_variable_set("@#{name}", nil)
+        instance_variable_get("@#{name}")
       end
 
       define_method("#{name}=") do |value|
